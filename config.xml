@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="fcracks" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.fcracks.movil" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
 	<name>FutbolCracks</name>
 	<description>
 		Aplicación Móvil FutbolCracks.
@@ -31,10 +31,10 @@
 	</feature>
     
     <gap:plugin name="org.apache.cordova.statusbar"/>
-    <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+    <!-- <gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
 		<param name="APP_ID" value="421765501317970" />
 		<param name="APP_NAME" value="FutbolCracks" />
-	</gap:plugin>
+	</gap:plugin> -->
 	
     <icon src="icon.png" />
 	<platform name="ios">
@@ -77,12 +77,13 @@
 	</platform>
 
     <gap:splash src="splash.png" />
-    <!-- <gap:splash src="res/android/splash-port-hdpi.png" gap:platform="android" gap:qualifier="hdpi"/>
-    <gap:splash src="res/android/splash-port-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>
-    <gap:splash src="res/android/splash-port-mdpi.png" gap:platform="android" gap:qualifier="mdpi"/>
-    <gap:splash src="res/android/splash-port-xhdpi.png" gap:platform="android" gap:qualifier="xhdpi"/>
-    <gap:splash src="res/android/splash-port-xxhdpi.png" gap:platform="android" gap:qualifier="xxhdpi"/>
-    <gap:splash src="res/android/splash-port-xxxhdpi.png" gap:platform="android" gap:qualifier="xxxhdpi"/> -->
-
+    <platform name="android">
+	    <gap:splash src="res/android/splash-port-hdpi.png" gap:density="port-hdpi"/>
+	    <gap:splash src="res/android/splash-port-ldpi.png" gap:density="port-ldpi"/>
+	    <gap:splash src="res/android/splash-port-mdpi.png" gap:density="port-mdpi"/>
+	    <gap:splash src="res/android/splash-port-xhdpi.png" gap:density="port-xhdpi"/>
+	    <gap:splash src="res/android/splash-port-xxhdpi.png" gap:density="port-xxhdpi"/>
+	    <gap:splash src="res/android/splash-port-xxxhdpi.png" gap:density="port-xxxhdpi"/>
+	</platform>
 <access origin="*" />
 </widget>
