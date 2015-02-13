@@ -92,8 +92,8 @@ var imprimirHoras = function (result){
             var name="";
             val.disponibles === 1 ? name = "cupo" : name = "cupos";
             $$('#horas').append('<li class="selectable arrow" data-fc-hora="'+val.hora+'" data-fc-label_hora="'+
-               val.label+'" data-fc-blancos="'+val.blancos+'" data-fc-negros="'+val.negros+'"><div><div class="derecha">'+Math.floor(val.venta.substr(0,(val.venta.length-3))/cancha.cupo_max).formatMoney(0,"$")+' c/u <small>'+val.disponibles+' '+name+'</small></div><strong>'+val.label+
-                '</strong><small>'+Math.floor(val.venta.substr(0,(val.venta.length-3))).formatMoney(0,"$")+' Total</small></div></li>');
+               val.label+'" data-fc-blancos="'+val.blancos+'" data-fc-negros="'+val.negros+'"><div><div class="derecha">'+Math.floor(val.venta.substr(0,(val.venta.length-3))/cancha.cupo_max).formatMoney(0,"$")+' c/u</div><strong>'+val.label+
+                '</strong><small>'+val.disponibles+' '+name+'</small></div></li>');/*<small>'+Math.floor(val.venta.substr(0,(val.venta.length-3))).formatMoney(0,"$")+' Total</small>*/
         });
         $$('#listado-horas div.fixer').remove();
         setTimeout(function(){
@@ -447,16 +447,18 @@ function imprimirPerfil(){
     refresh_perfil.hide();
 }
 
-function login(){
-    console.log('login!!');
+function loginConFb(){
     var fbLoginSuccess = function (userData) {
-    alert("UserInfo: " + JSON.stringify(userData));
-}
+        // console.log("UserInfo: " + JSON.stringify(userData));
+        facebookConnectPlugin.api( "me/?fields=first_name,middle_name,last_name,birthday,email,gender,age_range", ["user_birthday"],
+        function (response) { alert(JSON.stringify(response)) },
+        function (response) { alert(JSON.stringify(response)) });
+    }
 
-facebookConnectPlugin.login(["public_profile"],
-    fbLoginSuccess,
-    function (error) { alert("" + error) }
-);
+    facebookConnectPlugin.login(["public_profile","email","user_birthday"],
+        fbLoginSuccess,
+        function (error) { Lungo.Notification.error("Error", ""+ error, "remove", function(){return}); }
+    );
 }
 
 
