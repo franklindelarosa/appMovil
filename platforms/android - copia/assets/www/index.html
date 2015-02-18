@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>FutbolCracks</title>
+    <meta name="description" content="Red social de futbolistas">
+    <meta name="author" content="Elecsis S.A.S">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="cleartype" content="on">
+
+    <!-- iPhone -->
+    <link href="http://lungo.tapquo.com/resources/icon-57.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="http://lungo.tapquo.com/resources/startup-image-320x460.png" media="(device-width: 320px) and (device-height: 480px)
+             and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+
+    <!-- iPhone (Retina) -->
+    <link href="http://lungo.tapquo.com/resources/icon-114.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="http://lungo.tapquo.com/resources/startup-image-640x920.png" media="(device-width: 320px) and (device-height: 480px)
+             and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+    <!-- iPhone 5 -->
+    <link href="http://lungo.tapquo.com/resources/startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px)
+             and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+    <!-- iPad -->
+    <link href="http://lungo.tapquo.com/resources/icon-72.png" sizes="72x72" rel="apple-touch-icon">
+    <link href="http://lungo.tapquo.com/resources/startup-image-768x1004.png" media="(device-width: 768px) and (device-height: 1024px)
+             and (orientation: portrait)
+             and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+    <link href="http://lungo.tapquo.com/resources/startup-image-748x1024.png" media="(device-width: 768px) and (device-height: 1024px)
+             and (orientation: landscape)
+             and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
+
+    <!-- iPad (Retina) -->
+    <link href="http://lungo.tapquo.com/resources/icon-144.png" sizes="144x144" rel="apple-touch-icon">
+    <link href="http://lungo.tapquo.com/resources/startup-image-1536x2008.png" media="(device-width: 768px) and (device-height: 1024px)
+             and (orientation: portrait)
+             and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+    <link href="http://lungo.tapquo.com/resources/startup-image-1496x2048.png" media="(device-width: 768px) and (device-height: 1024px)
+             and (orientation: landscape)
+             and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+    <!-- Lungo - Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/lungo.css">
+    <link rel="stylesheet" type="text/css" href="css/lungo.icon.css">
+    <link rel="stylesheet" type="text/css" href="css/lungo.theme.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body class="app">
+    <section id="main" data-transition="fade" data-pull="chevron-down">
+        <header data-title="Canchas">
+            <nav>
+                <button data-article="cancha" data-view-article="listado-canchas" data-icon="angle-left"></button>
+                <button data-article="listado-dias" data-view-article="cancha" data-icon="angle-left"></button>
+                <button data-article="listado-horas" data-view-article="listado-dias" data-icon="angle-left"></button>
+                <button data-article="listado-equipos" data-view-article="listado-horas" data-icon="angle-left"></button>
+            </nav>
+        </header>
+        <footer>
+            <nav>
+                <a href="#" data-view-section="main"><p class="centrar" style="color: #003C5A"><img src="images/field_active.png"> Canchas</p></a>
+                <a href="#" data-view-section="perfil"><p class="centrar" style="color: #A1A6A8"><img src="images/user.png"> Perfil</p></a>
+            </nav>
+        </footer>
+
+        <article id="listado-canchas" class="active list scroll indented">
+            <ul id="canchas"></ul>
+        </article>
+
+        <article id="cancha" class="scroll indented color-texto">
+            <p class="centrar">
+                <img style="width: 100%; height: auto;" src="">
+            </p>
+            <h2></h2>
+            <p id="label-cupo"></p>
+            <!-- <p id="label-telefono"></p> -->
+            <p id="label-direccion"></p>
+            <p class="centrar"><button id="seleccionar-cancha" class="accept anchor" data-label="RESERVAR"></button></p><br>
+        </article>
+
+        <article id="listado-dias" class="list scroll indented">
+            <header class="sub-header"><h5 class="centrar"></h5></header>
+            <ul id="dias"></ul>
+        </article>
+
+        <article id="listado-horas" class="list scroll indented">
+            <header class="sub-header"><h5 class="centrar"></h5></header>
+            <ul id="horas"></ul>
+        </article>
+
+        <article id="listado-equipos" class="list scroll indented">
+            <div class="fondo-equipos" style="background: url('images/vs.png') no-repeat 0 0; background-size:100% auto; width:100%; height:auto; text-align:center; ">
+                <div style="margin:4%; color:white; font-size:1.1em">
+                    <span id="li-equipo-cancha" style="font-size:1.3em"></span>
+                    <br/>
+                    <span id="li-equipo-fecha"></span>
+                    <br/>
+                    <span id="li-equipo-hora"></span>
+                </div>
+            </div>
+
+            <ul id='equipos'>
+                <li class="anchor"><div id="unirse-blanco" data-fc-estado="no"><div class="derecha-equipos"><a href="#" data-icon="plus"></a></div><h2>Equipo Blanco</h2></div>
+                    <ul id="equipo-blanco"></ul>
+                </li>
+                <li class="anchor"><div id="unirse-negro" data-fc-estado="no"><div class="derecha-equipos"><a style="margin-top: 2px;" href="#" data-icon="plus"></a></div><h2>Equipo Negro</h2></div>
+                    <ul id="equipo-negro"></ul>
+                </li>
+            </ul>
+        </article>
+    </section>
+
+    <section id="login" data-transition="cover">
+        <header data-title="Iniciar Sesión">
+            <nav class="on-left">
+                <button data-view-section="back" data-icon="angle-left"></button>
+            </nav>
+            <!-- <nav class="on-right">
+                <button data-view-section="registrar" data-label="Registrar&nbsp"></button>
+            </nav> -->
+        </header>
+        <article id="article_login" class="active indented scroll">
+            <img src="images/login.png" style="width: 100%; height: auto;">
+            <div class="form">
+                <fieldset>
+                    <input id="correo" type="email" placeholder="Correo">
+                </fieldset>
+                <fieldset>
+                    <input id="contrasena" type="password" placeholder="Contraseña">
+                </fieldset>
+                <p class="centrar"><button id="iniciar-sesion" class="anchor accept margin-top margin-bottom" data-label="Ingresar"></button></p>
+                <button id="iniciar-facebook" onclick="loginConFb()" class="anchor margin-top margin-bottom" data-icon="facebook" data-label="Entrar con Facebook"></button><br>
+                <p class="centrar">
+                    <a href="#" class="margin-top margin-bottom registrar" data-view-section="registrar">Regístrate</a>
+                </p><br>
+            </div>
+        </article>
+    </section>
+
+    <section id="registrar" data-transition="fade">
+        <header data-title="Registarse">
+            <nav class="on-left"><button data-icon="angle-left" data-view-section="back"></button></nav>
+        </header>
+        <article class="active scroll indented">
+            <div class="form">
+                <fieldset>
+                    <input id="campo_nombres" type="text" placeholder="Nombre(s)">
+                </fieldset>
+                <fieldset>
+                    <input id="campo_apellidos" type="text" placeholder="Apellido(s)">
+                </fieldset>
+                <fieldset>
+                    <input id="campo_correo" type="email" placeholder="Correo electrónico">
+                </fieldset>
+                <fieldset>
+                    <input id="campo_contrasena" type="password" placeholder="Contraseña">
+                </fieldset>
+                <fieldset>
+                    <label class="select border">
+                        <select id="campo_sexo">
+                            <option value="">Selecciona sexo</option>
+                            <option value="m">Hombre</option>
+                            <option value="f">Mujer</option>
+                        </select>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <input id="campo_telefono" type="tel" placeholder="Telefono">
+                </fieldset>
+                <a href="#" id="btn_registrar" class="button anchor accept margin-top margin-bottom" data-label="Crear cuenta"></a>
+            </div>
+        </article>
+    </section>
+
+    <section id="invitar" data-transition="fade">
+        <header data-title="Invitando jugador">
+            <nav class="on-left"><button data-icon="angle-left" data-view-section="back"></button></nav>
+        </header>
+        <article class="active scroll indented">
+            <div class="form">
+                <fieldset>
+                    <input id="inv_nombres" type="text" placeholder="Nombre(s)">
+                </fieldset>
+                <fieldset>
+                    <input id="inv_apellidos" type="text" placeholder="Apellido(s)">
+                </fieldset>
+                <fieldset>
+                    <input id="inv_correo" type="email" placeholder="Correo electrónico">
+                </fieldset>
+                <fieldset>
+                    <label class="select border">
+                        <select id="inv_sexo">
+                            <option value="">Selecciona sexo</option>
+                            <option value="m">Hombre</option>
+                            <option value="f">Mujer</option>
+                        </select>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <input id="inv_telefono" type="tel" placeholder="Telefono">
+                </fieldset>
+                <a href="#" id="btn_invitar" class="button anchor accept margin-top margin-bottom" data-label="Invitar"></a>
+            </div>
+        </article>
+    </section>
+
+    <section id="perfil" data-transition="fade" data-pull="chevron-down">
+        <header data-title="Perfil">
+            <nav class="on-right"><button id="cerrar-sesion" data-icon="off"></button></nav>
+        </header>
+        <footer>
+            <nav>
+                <a href="#" data-view-section="main"><p class="centrar" style="color: #A1A6A8"><img src="images/field.png"> Canchas</p></a>
+                <a href="#" data-view-section="perfil"><p class="centrar" style="color: #003C5A"><img src="images/user_active.png"> Perfil</p></a>
+            </nav>
+        </footer>
+        <article id="article_perfil" class="active scroll color-texto">
+            <div class="empty">
+                <strong>Sesión no iniciada</strong>
+                <span class="icon user"></span>
+                <small>Debes iniciar sesión para poder acceder al perfil</small><br>
+                <a id="lanzar-login" class="button anchor accept" href="#" data-label="Iniciar Sesión"></a>
+            </div>
+            <div id="contenido" style="margin-top: 10px"></div>
+        </article>
+    </section>
+
+    <section id="editar-perfil" data-transition="cover">
+        <header data-title="Editar perfil">
+            <nav class="on-left"><button data-icon="angle-left" data-view-section="back"></button></nav>
+        </header>
+        <article class="active scroll indented">
+            <div class="form">
+                <fieldset>
+                    <label>Nombre(s):</label>
+                    <input id="edit_nombres" type="text" placeholder="Nombre(s)">
+                </fieldset>
+                <fieldset>
+                    <label>Apllido(s):</label>
+                    <input id="edit_apellidos" type="text" placeholder="Apellido(s)">
+                </fieldset>
+                <fieldset>
+                    <label>Correo:</label>
+                    <input id="edit_correo" type="email" placeholder="Correo electrónico">
+                </fieldset>
+                <fieldset>
+                    <label>Contraseña:</label>
+                    <input id="edit_contrasena" type="password" placeholder="**********">
+                </fieldset>
+                <fieldset>
+                    <label>Sexo:</label>
+                    <label class="select border">
+                        <select id="edit_sexo">
+                            <option value="">Selecciona sexo</option>
+                            <option value="m">Hombre</option>
+                            <option value="f">Mujer</option>
+                        </select>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label>Teléfono:</label>
+                    <input id="edit_telefono" type="tel" placeholder="Telefono">
+                </fieldset>
+                <a href="#" id="btn_editar" class="button anchor accept margin-top margin-bottom" data-label="Guardar cambios"></a>
+            </div>
+        </article>
+    </section>
+
+    <script src="js/quo.js"></script>
+    <script src="js/lungo.js"></script>
+    <script src="js/eventos.js"></script>
+    <script src="js/metodos.js"></script>
+    <script src="js/reverse.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/facebookConnectPlugin.js"></script>
+</body>
+</html>

@@ -376,6 +376,23 @@ $$(document).on('singleTap', '#btn_invitar', function(event) {
     }
 });
 
+$$(document).on('singleTap', '#equipos li.selectable', function(event) {
+    Lungo.Notification.show();
+    var jugador = {
+        entidad: $$(this).attr('data-fc-entidad'),
+        equipo: $$(this).attr('data-fc-equipo'),
+        partido: partido
+    }
+    if(jugador.entidad === 'invitado'){
+        jugador.id = $$(this).attr('data-fc-id-invitado');
+        jugador.responsable = $$(this).attr('data-fc-id-responsable');
+    }else{
+        jugador.id = $$(this).attr('data-fc-id-usuario');
+    }
+    var url = direccionBase+"site/informacion-jugador";
+    Lungo.Service.post(url, jugador, imprimirInfoJugador, "json");
+});
+
 $$(document).on('singleTap', '#history li.selectable', function(event) {
     Lungo.Notification.show();
     cancha = {
