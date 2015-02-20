@@ -12,7 +12,8 @@ Lungo.ready(function() {
         }
     }
     // direccionBase = "http://elecsis.com.co/fcracks/futbolcracksapi/web/v1/";
-    direccionBase = "http://fcracks.com/fcapi/web/v1/";
+    // direccionBase = "http://fcracks.com/fcapi/web/v1/";
+    direccionBase = "http://localhost:8080/futbolcracksapi/web/v1/";
     Lungo.Service.Settings.async = true;
     Lungo.Service.Settings.error = function(type, xhr){
         if(type === "QuoJS.ajax: Timeout exceeded"){
@@ -148,9 +149,9 @@ $$('#invitar').on('unload', function(event) {
     setTimeout(function(){$$('#invitar div.form').find(':not(button)[id]').val('');}, 350);
 });
 // navigator.Backbutton.goHome(function() {
-//     console.log('success')
+//     alert('success');
 // }, function() {
-//     console.log('fail')
+//     alert('fail');
 // });
 $$('#lanzar-login').on('singleTap', function(event) {
     if(localStorage["_chrome-rel-back"]){
@@ -307,7 +308,7 @@ $$('#btn_editar').on('singleTap', function(event) {
     }else{
         Lungo.Service.post(url, datos, function(result){
             if(result.status === 'ok'){
-                localStorage["_chrome-rel-back"] = result.key;
+                // localStorage["_chrome-rel-back"] = result.key;
                 imprimirPerfil();
                 Lungo.Notification.success("Correcto", result.mensaje, "ok", function(){return});
                 Lungo.Router.section("perfil");
