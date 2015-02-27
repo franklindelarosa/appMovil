@@ -18,10 +18,40 @@ function mostrarError(){
     Lungo.Notification.error("Error de conexión", "Por favor verifica que tengas acceso a internet", "remove", function(){return});
 }
 
+//esta función calcula la edad a partir de la fecha de nacimiento
+function calcular_edad(fecha) {
+        var values = fecha.split("-");  var dia = values[2];  var mes = values[1];  var ano = values[0];
+        var fecha_hoy = new Date();     var ahora_ano = fecha_hoy.getYear();    var ahora_mes = fecha_hoy.getMonth()+1;
+        var ahora_dia = fecha_hoy.getDate();    var edad = (ahora_ano + 1900) - ano;
+        if (ahora_mes < mes){
+            edad--;
+        }
+        if ((mes === ahora_mes) && (ahora_dia < dia)){
+            edad--;
+        }
+        if (edad > 1900){
+            edad -= 1900;
+        }
+        return edad;
+    }
+
 // este método capitaliza la primera palabra de un string
 function capitaliseFirstLetter(string)
 {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// esta función devuelve un string capitalizado en CamelCase
+function capitalizarTexto(texto){
+    var palabras = texto.split(' ');
+    var capitalizado = '';
+    $$.each(palabras, function(index, palabra) {
+        capitalizado += palabra.charAt(0).toUpperCase() + palabra.slice(1);
+        if(index < palabras.length-1){
+            capitalizado += ' ';
+        }
+    });
+    return capitalizado;
 }
 
 // este método imprime el listado de las canchas en la primera vista
@@ -40,7 +70,7 @@ var imprimirCanchas = function (result){
             });
             Lungo.Notification.hide();
         }else{
-            var html_error = '<br><p class="centrar"><img src="images/warning.png"/></p><br><small class="centrar">No hay canchas disponibles en el momento</small>';
+            var html_error = '<br><p class="centrar"><img src="images/info.png"/></p><br><small class="centrar">No hay canchas disponibles en el momento</small>';
             Lungo.Notification.html(html_error, "Cerrar");
         }
         $$('#listado-canchas div[style]').remove();
@@ -471,6 +501,8 @@ var imprimirInfoJugador = function (result){
     }
 }
 
+// esta función actualiza el campo "posicion" de los formularios de la app
+// las posiciones se actualizan junto con el listado de las canchas disponibles
 function imprimirPosiciones(select){
     var campo_select = $$(select);
     campo_select.empty();

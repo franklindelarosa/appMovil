@@ -35,6 +35,19 @@ label.margen-select{
 	margin-right: 5px;
 }
 
+.notification > .window.confirm small {
+	display: none;
+}
+.notification > .window.confirm strong {
+	padding-bottom: 1em;
+}
+.notification > .window.confirm button {
+	display: inline;
+	width: 50%;
+	line-height: 2.5em;
+	font-size: 1.2em;
+}
+
 a.icono {
 	float: right;
 	color: gray;

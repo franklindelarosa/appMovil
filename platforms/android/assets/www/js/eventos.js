@@ -3,12 +3,51 @@ Lungo.init({
 });
 Lungo.ready(function() {
     Lungo.Notification.show();
+    // setTimeout(function(){
+    //     Lungo.Notification.confirm({
+    //         icon: 'exclamation-sign',
+    //         title: 'Seguro que deseas salir de la aplicación?',
+    //         // description: '',
+    //         accept: {
+    //             // icon: 'ok',
+    //             label: 'Si',
+    //             callback: function(){ return}
+    //         },
+    //         cancel: {
+    //             // icon: 'error',
+    //             label: 'No',
+    //             callback: function(){ return }
+    //         }
+    //     });
+    // }, 1000);
+    var nav_section = 'main';
+    var nav_article = 'listado-canchas';
     var environment = Lungo.Core.environment();
     // console.log(environment.os.name);
     if(typeof(environment.os) != "undefined" && environment.os !== null) {
-        if(environment.os.name === "ios"){
+        sistema_operativo = environment.os.name;
+        if(sistema_operativo === "ios"){
             $$('section > header').style('margin-top', '20px');
             $$('section > div[data-control="pull"]').style('margin-top', '20px');
+        }else{
+            document.addEventListener("backbutton", onBackKeyDown, false);
+            function onBackKeyDown() {
+                Lungo.Notification.confirm({
+                    icon: 'exclamation-sign',
+                    title: 'Seguro que deseas salir de la aplicación?',
+                    description: '',
+                    accept: {
+                        icon: 'checkmark',
+                        label: 'Si',
+                        callback: function(){ navigator.app.exitApp();}
+                    },
+                    cancel: {
+                        icon: 'close',
+                        label: 'No',
+                        callback: function(){ return }
+                    }
+                });
+            }
         }
     }
     // direccionBase = "http://elecsis.com.co/fcracks/futbolcracksapi/web/v1/";
@@ -40,8 +79,6 @@ Lungo.ready(function() {
     var url = direccionBase+"site/listar-canchas";
     Lungo.Service.post(url, "id=1", imprimirCanchas, "json");
 });
-
-
 
 $$('#main').on('load', function(event) {
     document.activeElement.blur();
@@ -160,14 +197,10 @@ $$('#registrar').on('unload', function(event) {
 $$('#invitar').on('unload', function(event) {
     setTimeout(function(){$$('#invitar div.form').find(':not(button)[id]').val('');}, 350);
 });
-// navigator.Backbutton.goHome(function() {
-//     console.log('success')
-// }, function() {
-//     console.log('fail')
-// });
+
 $$('#lanzar-login').on('singleTap', function(event) {
     if(localStorage["_chrome-rel-back"]){
-        Lungo.Notification.error("", "Ya has iniciado sesión", "warning-sign", function(){return});
+        // Lungo.Notification.error("", "Ya has iniciado sesión", "warning-sign", function(){return});
     }else{
         sessionStorage["lanzadoDesdeHome"] = "_crfs";
         Lungo.Router.section("login");
@@ -292,8 +325,8 @@ $$('#btn_registrar').on('singleTap', function(event) {
     document.activeElement.blur();
     Lungo.Notification.show();
     var datos = {
-        nombres: $$('#campo_nombres').val(),
-        apellidos: $$('#campo_apellidos').val(),
+        nombres: capitalizarTexto($$('#campo_nombres').val()),
+        apellidos: capitalizarTexto($$('#campo_apellidos').val()),
         fecha_nacimiento: $$('#campo_fecha_nacimiento').val(),
         correo: $$('#campo_correo').val(),
         contrasena: $$('#campo_contrasena').val(),
@@ -367,8 +400,8 @@ $$('#btn_editar').on('singleTap', function(event) {
     document.activeElement.blur();
     Lungo.Notification.show();
     var datos = {
-        nombres: $$('#edit_nombres').val(),
-        apellidos: $$('#edit_apellidos').val(),
+        nombres: capitalizarTexto($$('#edit_nombres').val()),
+        apellidos: capitalizarTexto($$('#edit_apellidos').val()),
         fecha_nacimiento: $$('#edit_fecha_nacimiento').val(),
         // correo: $$('#edit_correo').val(),
         contrasena: $$('#edit_contrasena').val(),
@@ -435,8 +468,8 @@ $$(document).on('singleTap', '#btn_invitar', function(event) {
     var url = direccionBase+"usuario/registrar-invitado?access-token="+localStorage["_chrome-rel-back"];
     document.activeElement.blur();
     var datos = {
-        nombres: $$('#inv_nombres').val(),
-        apellidos: $$('#inv_apellidos').val(),
+        nombres: capitalizarTexto($$('#inv_nombres').val()),
+        apellidos: capitalizarTexto($$('#inv_apellidos').val()),
         // fecha_nacimiento: $$('#inv_fecha_nacimiento').val(),
         correo: $$('#inv_correo').val(),
         sexo: $$('#inv_sexo').val(),

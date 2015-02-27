@@ -988,7 +988,7 @@ form input[type=checkbox]:checked:after,
   color: #3d3d3d;
   font-weight: 400;
 }
-.notification .window.confirm button[data-callback=cancel],
+/*.notification .window.confirm button[data-callback=cancel],*/
 .notification .window.html button[data-callback=cancel],
 .notification .window.confirm button[data-action=close],
 .notification .window.html button[data-action=close] {
