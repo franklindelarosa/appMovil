@@ -314,7 +314,7 @@ var imprimirJugador = function(result){
             $$('#unirse-negro > div span').removeClass();
             $$('#unirse-negro > div span').html('<h4>Invitar</h4>');
             $$('#listado-equipos ul > li:first-child h2').html("Equipo Blanco\t"+total_blancos +"/"+(cancha.cupo_max/2));
-            $$('#equipo-blanco').prepend('<li data-fc-id-usuario="'+result.data.id+'" data-fc-equipo="b" data-fc-entidad="usuario"><span class="icon user"></span><a id="sacarme-blanco" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Usuario registrado</small></li>');
+            $$('#equipo-blanco').prepend('<li class="selectable" data-fc-id-usuario="'+result.data.id+'" data-fc-equipo="b" data-fc-entidad="usuario"><span class="icon user"></span><a id="sacarme-blanco" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Usuario registrado</small></li>');
         }else{
             total_negros += 1;
             if(total_negros === cancha.cupo_max/2){
@@ -327,7 +327,7 @@ var imprimirJugador = function(result){
             $$('#unirse-blanco > div span').removeClass();
             $$('#unirse-blanco > div span').html('<h4>Invitar</h4>');
             $$('#listado-equipos ul > li:nth-child(2) h2').html("Equipo Negro\t"+total_negros +"/"+(cancha.cupo_max/2));
-            $$('#equipo-negro').prepend('<li data-fc-id-usuario="'+result.data.id+'" data-fc-equipo="n" data-fc-entidad="usuario"><span class="icon user"></span><a id="sacarme-negro" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Usuario registrado</small></li>');
+            $$('#equipo-negro').prepend('<li class="selectable" data-fc-id-usuario="'+result.data.id+'" data-fc-equipo="n" data-fc-entidad="usuario"><span class="icon user"></span><a id="sacarme-negro" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Usuario registrado</small></li>');
         }
         imprimirPerfil();
         Lungo.Notification.hide();
@@ -347,7 +347,7 @@ var imprimirJugador = function(result){
 
 // esta variable almacena la función de verificación de eliminación del usuario en un partido específico
 var verificarEliminacion = function(result){
-    // console.log(result);
+    console.log(result);
     if(result.status === "ok"){
         current.remove();
         total_blancos -= $$('li[data-fc-equipo="b"][data-fc-id-responsable="'+result.yo+'"]').length;
@@ -411,14 +411,14 @@ var verificarInvitacion = function(result){
             if(total_blancos === cancha.cupo_max/2){
                 $$('#unirse-blanco .derecha-equipos').hide();
             }
-            $$('#equipo-blanco').append('<li data-fc-id-responsable="'+result.data.responsable+'" data-fc-id-invitado="'+result.data.id+'" data-fc-equipo="b" data-fc-entidad="invitado"><span class="icon group"></span><a id="sacar-invitado-blanco" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Invitado</small></li>');
+            $$('#equipo-blanco').append('<li class="selectable" data-fc-id-responsable="'+result.data.responsable+'" data-fc-id-invitado="'+result.data.id+'" data-fc-equipo="b" data-fc-entidad="invitado"><span class="icon group"></span><a id="sacar-invitado-blanco" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Invitado</small></li>');
             $$('#listado-equipos ul > li:first-child h2').html("Equipo Blanco\t"+total_blancos +"/"+(cancha.cupo_max/2));
         }else{
             total_negros += 1;
             if(total_negros === cancha.cupo_max/2){
                 $$('#unirse-negro .derecha-equipos').hide();
             }
-            $$('#equipo-negro').append('<li data-fc-id-responsable="'+result.data.responsable+'" data-fc-id-invitado="'+result.data.id+'" data-fc-equipo="n" data-fc-entidad="invitado"><span class="icon group"></span><a id="sacar-invitado-negro" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Invitado</small></li>');
+            $$('#equipo-negro').append('<li class="selectable" data-fc-id-responsable="'+result.data.responsable+'" data-fc-id-invitado="'+result.data.id+'" data-fc-equipo="n" data-fc-entidad="invitado"><span class="icon group"></span><a id="sacar-invitado-negro" href="#" class="icono"><span style="color:#e74c3c" class="icon remove-sign"></span></a><strong>'+result.data.nombre+'</strong><small>Invitado</small></li>');
             $$('#listado-equipos ul > li:nth-child(2) h2').html("Equipo Negro\t"+total_negros +"/"+(cancha.cupo_max/2));
         }
         Lungo.Router.section("main");
@@ -442,7 +442,7 @@ function imprimirPerfil(){
                 articulo.append(
                     '<div class="layout horizontal">'+
                         '<div data-layout="quarter">'+
-                            '<p class="centrar"><img id="foto" class="img-perfil" src="images/profile.png"/></p>'+
+                            '<p class="centrar"><img id="foto" class="img-perfil" src="'+direccionBase+'../fotos/'+usuario.foto+'"/></p>'+
                         '</div>'+
                         '<div style="margin-left: 10px" data-layout="primary"><h4>'+usuario.nombre+'</h4>'+
                             '<small><span class="icon envelope"></span> '+usuario.correo+'</small><br>'+

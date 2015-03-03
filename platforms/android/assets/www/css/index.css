@@ -43,7 +43,7 @@ label.requerido:before {
 
 #foto {
 	width: 90px;
-	height: auto;
+	height: 90px;
 }
 
 .notification > .window.confirm small {
