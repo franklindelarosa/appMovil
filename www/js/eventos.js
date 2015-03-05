@@ -20,8 +20,7 @@ Lungo.ready(function() {
     //         }
     //     });
     // }, 2000);
-    var nav_section = 'main';
-    var nav_article = 'listado-canchas';
+    var nav_section = 'main';var nav_article = 'listado-canchas';fixer = false;
     var environment = Lungo.Core.environment();
     // console.log(environment.os.name);
     if(typeof(environment.os) != "undefined" && environment.os !== null) {
@@ -170,7 +169,7 @@ $$('#perfil').on('load', function(event) {
     $$('#article_perfil div.fixer').remove();
     if(localStorage["_chrome-rel-back"]){
         setTimeout(function(){
-            var resta = $$('#article_perfil').height() - 10 - $$('#contenido').height();
+            var resta = $$('#article_perfil').height() - 20 - $$('#contenido').height();
             if(resta > 0){
                 $$('#article_perfil').append('<div class="fixer" style="height: '+resta+'px"></div>');
             }
@@ -384,6 +383,27 @@ $$(document).on('singleTap', '#foto',function(event) {
     Lungo.Notification.html(html_picture, 'Cancelar');
 });
 
+$$(document).on('singleTap', 'a#eliminar_foto',function(event) {
+    Lungo.Notification.confirm({
+        icon: 'exclamation-sign',
+        title: 'Seguro que deseas eliminar tu foto?',
+        description: '',
+        accept: {
+            icon: 'checkmark',
+            label: 'Si',
+            callback: function(){
+                var url = direccionBase+"usuario/reestablecer-foto?access-token="+localStorage["_chrome-rel-back"];
+                Lungo.Service.post(url, {cancha:cancha.id}, eliminarFoto, "json");
+            }
+        },
+        cancel: {
+            icon: 'close',
+            label: 'No',
+            callback: function(){ return }
+        }
+    });
+});
+
 $$(document).on('singleTap', '#btn_camera',function(event) {
     Lungo.Notification.hide();
     var onPhotoDataSuccess = function(imageData){
@@ -399,7 +419,8 @@ $$(document).on('singleTap', '#btn_camera',function(event) {
         }, "json");
     }
     var onFail = function(message){
-        Lungo.Notification.error("Error", ""+ message, "remove", function(){return});
+        // Lungo.Notification.error("Error", message, "remove", function(){return});
+        return;
     }
     navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
         quality: 50, allowEdit: true,
@@ -425,7 +446,8 @@ $$(document).on('singleTap', '#btn_gallery',function(event) {
         }, "json");
     }
     var onFail = function(message){
-        Lungo.Notification.error("Error", ""+ message, "remove", function(){return});
+        // Lungo.Notification.error("Error", message, "remove", function(){return});
+        return;
     }
     navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
         quality: 50, allowEdit: true,
@@ -487,6 +509,7 @@ $$(document).on('singleTap', '#equipos li.selectable', function(event) {
 
 $$(document).on('singleTap', '#sacarme-blanco', function(event) {
     Lungo.Notification.show();
+    fixer = true;
     var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
     var datos = {
         partido: partido,
@@ -499,6 +522,7 @@ $$(document).on('singleTap', '#sacarme-blanco', function(event) {
 
 $$(document).on('singleTap', '#sacarme-negro', function(event) {
     Lungo.Notification.show();
+    fixer = true;
     var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
     var datos = {
         partido: partido,
@@ -511,6 +535,7 @@ $$(document).on('singleTap', '#sacarme-negro', function(event) {
 
 $$(document).on('singleTap', '#sacar-invitado-blanco', function(event) {
     Lungo.Notification.show();
+    fixer = true;
     var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
     current = $$(this).parent("li").first();
     Lungo.Service.post(url, {entidad: current.attr('data-fc-entidad'), equipo: "blancos", partido: partido, jugador: current.attr('data-fc-id-invitado')}, verificarEliminacionInvitado, "json");
@@ -518,6 +543,7 @@ $$(document).on('singleTap', '#sacar-invitado-blanco', function(event) {
 
 $$(document).on('singleTap', '#sacar-invitado-negro', function(event) {
     Lungo.Notification.show();
+    fixer = true;
     var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
     current = $$(this).parent("li").first();
     Lungo.Service.post(url, {entidad: current.attr('data-fc-entidad'), equipo: "negros", partido: partido, jugador: current.attr('data-fc-id-invitado')}, verificarEliminacionInvitado, "json");

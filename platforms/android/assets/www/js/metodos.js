@@ -428,6 +428,25 @@ var verificarInvitacion = function(result){
     Lungo.Notification.hide();
 }
 
+// esta función recibe los nombres y apellidos y devuelve el nombre completo recortado
+function recortarNombre(nombres, apellidos){
+    var custom_nombre = nombres.split(' ');
+    var custom_apellido = apellidos.split(' ');
+    var result = custom_nombre[0]+' ';
+    if(custom_apellido.length > 2){
+        if(custom_apellido[0].length < 3){
+            if(custom_apellido[1].length < 3){
+                result += custom_apellido[0]+' '+custom_apellido[1]+' '+custom_apellido[2];
+            }
+        }else{
+            result += custom_apellido[0]+' '+custom_apellido[1];
+        }
+    }else{
+        result += custom_apellido[0];
+    }
+    return result;
+}
+
 // esta función imprime el perfil del usuario logueado en la aplicación
 function imprimirPerfil(){
     if(localStorage["_chrome-rel-back"]){
@@ -438,16 +457,19 @@ function imprimirPerfil(){
             if(result.status === 'ok'){
                 usuario = result.data;
                 var articulo = $$('#article_perfil div#contenido');
+                var custom_nombre = recortarNombre(usuario.nombres, usuario.apellidos);
                 articulo.empty();
                 articulo.append(
                     '<div class="layout horizontal">'+
                         '<div data-layout="quarter">'+
                             '<p class="centrar"><img id="foto" class="img-perfil" src="'+direccionBase+'../fotos/'+usuario.foto+'"/></p>'+
+                            '<p class="centrar"><a href="#" id="eliminar_foto" class="enlace" style="font-size:0.8em">Eliminar foto</a></p>'+
                         '</div>'+
-                        '<div style="margin-left: 10px" data-layout="primary"><h4>'+usuario.nombre+'</h4>'+
+                        '<div style="margin-left:10px" data-layout="primary"><h4>'+custom_nombre+'</h4>'+
                             '<small><span class="icon envelope"></span> '+usuario.correo+'</small><br>'+
                             '<small><span class="icon phone"></span> '+usuario.telefono+'</small>'+
                             '<a href="#" id="editar" class="editar-perfil"> Editar Perfil </a><br>'+
+                            '<small><span class="icon group"></span> '+usuario.posicion+'</small><br/>'+
                             '<small><span class="icon ok"></span> '+result.total+' partidos</small>'+
                         '</div>'+
                     '</div>'+
@@ -489,16 +511,27 @@ function imprimirPerfil(){
 // esta función muestra la información de un jugador cuando se selecciona de la lista de jugadores de un partido
 var imprimirInfoJugador = function (result){
     // console.log(result);
-    if(result.status === 'ok'){
-        var html_info = '<h2>Información del jugador</h2><br/>';
-        html_info += '<h5>'+result.data.nombres+' '+result.data.apellidos+'</h5><br/>';
-        html_info += '<h5>Sexo: '+result.data.sexo+'</h5><br/>';
-        html_info += '<h5>Perfil: '+result.data.perfil+'</h5><br/>';
+    if(result.status === 'ok' && !fixer){
+        // var html_info = '<h2>Información del jugador</h2><br/>';
+        var html_info = '<img class="foto_detalle" src="'+direccionBase+'../fotos/'+result.data.foto+'"/><br>';
+        html_info += '<h4>'+result.data.nombres+' '+result.data.apellidos+'</h4>';
+        if(result.entidad !== 'invitado'){
+            if(result.data.fecha_nacimiento !== null){
+                html_info += '<h5>Edad: '+calcular_edad(result.data.fecha_nacimiento)+' años</h5>';
+            }else{
+                html_info += '<h5>Edad: Sin definir</h5>';
+            }
+        }
+        html_info += '<h5>Sexo: '+result.data.sexo+'</h5>';
+        html_info += '<h5>Posición: '+result.data.posicion+'</h5>';
+        html_info += '<h5>Pierna hábil: ';
+        result.data.pierna_habil !== null ? html_info +=result.data.pierna_habil+'</h5>' : html_info +='Sin definir</h5>';
         if(result.entidad === 'invitado'){
             html_info += '<h5>Responsable: '+result.data.resp_nombres+' '+result.data.resp_apellidos+'</h5>';
         }
         Lungo.Notification.html(html_info, "Cerrar");
     }
+    fixer = false;
 }
 
 // esta función actualiza el campo "posicion" de los formularios de la app
@@ -510,6 +543,15 @@ function imprimirPosiciones(select){
         campo_select.append('<option value="'+val.id_posicion+'">'+val.posicion+'</option>');
     });
     campo_select.find('option').first().html('Selecciona una posición');
+}
+
+var eliminarFoto = function(result){
+    if(result.status === 'ok'){
+        $$('#foto').attr('src', result.url);
+        Lungo.Notification.success("Correcto", result.mensaje, "ok", function(){return});
+    }else{
+        Lungo.Notification.error("Error", result.mensaje, "remove", function(){return});
+    }
 }
 
 

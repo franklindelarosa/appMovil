@@ -61,12 +61,16 @@
                 <button data-article="listado-equipos" data-view-article="listado-horas" data-icon="angle-left"></button>
             </nav>
         </header>
-        <footer>
+        <nav data-control="groupbar">
+            <a class="active" href="#" data-view-section="main"><p class="centrar" style="color: #003C5A"><img src="images/field_active.png" height="25px"> Canchas</p></a>
+            <a href="#" data-view-section="perfil"><p class="centrar" style="color: #A1A6A8"><img src="images/user.png" height="25px"> Perfil</p></a>
+        </nav>
+        <!-- <footer>
             <nav>
                 <a href="#" data-view-section="main"><p class="centrar" style="color: #003C5A"><img src="images/field_active.png"> Canchas</p></a>
                 <a href="#" data-view-section="perfil"><p class="centrar" style="color: #A1A6A8"><img src="images/user.png"> Perfil</p></a>
             </nav>
-        </footer>
+        </footer> -->
 
         <article id="listado-canchas" class="active list scroll indented">
             <ul id="canchas"></ul>
@@ -136,7 +140,7 @@
                 <p class="centrar"><button id="iniciar-sesion" class="anchor accept margin-top margin-bottom" data-label="Ingresar"></button></p>
                 <button id="btn_facebook" class="anchor margin-top margin-bottom" data-icon="facebook" data-label="Entrar con Facebook"></button><br>
                 <p class="centrar">
-                    <a href="#" class="margin-top margin-bottom registrar" data-view-section="registrar">Regístrate</a>
+                    <a class="margin-top margin-bottom enlace" onclick="(Lungo.Router.section('registrar'))">Regístrate</a>
                 </p><br>
             </div>
         </article>
@@ -156,9 +160,9 @@
                     <label class="requerido">Apellido(s):</label>
                     <input id="campo_apellidos" type="text" placeholder="Apellido(s)">
                 </fieldset>
-                <fieldset>
+                <fieldset data-icon="calendar">
                     <label>Fecha nac:</label>
-                    <input id="campo_fecha_nacimiento" type="date" placeholder="mm/dd/aaaa">
+                    <input id="campo_fecha_nacimiento" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="aaaa-mm-dd">
                 </fieldset>
                 <fieldset>
                     <label class="requerido">Correo:</label>
@@ -262,13 +266,17 @@
         <header data-title="Perfil">
             <nav class="on-right"><button id="cerrar-sesion" data-icon="off"></button></nav>
         </header>
-        <footer>
+        <nav data-control="groupbar">
+            <a href="#" data-view-section="main"><p class="centrar" style="color: #A1A6A8"><img src="images/field.png" height="25px"> Canchas</p></a>
+            <a class="active" href="#" data-view-section="perfil"><p class="centrar" style="color: #003C5A"><img src="images/user_active.png" height="25px"> Perfil</p></a>
+        </nav>
+        <!-- <footer>
             <nav>
                 <a href="#" data-view-section="main"><p class="centrar" style="color: #A1A6A8"><img src="images/field.png"> Canchas</p></a>
                 <a href="#" data-view-section="perfil"><p class="centrar" style="color: #003C5A"><img src="images/user_active.png"> Perfil</p></a>
             </nav>
-        </footer>
-        <article id="article_perfil" class="active scroll color-texto">
+        </footer> -->
+        <article id="article_perfil" class="active scroll color-texto" style="padding-top:10px">
             <div class="empty">
                 <strong>Sesión no iniciada</strong>
                 <span class="icon user"></span>

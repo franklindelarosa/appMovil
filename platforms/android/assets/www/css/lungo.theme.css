@@ -281,15 +281,15 @@ section > footer > nav > a.active,
 nav[data-control=groupbar] > a.active,
 section > footer > nav > a:active,
 nav[data-control=groupbar] > a:active {
-  color: #003c5a;
+  color: #003C5A;
 }
 nav[data-control=groupbar] > a.active,
 nav[data-control=groupbar] > a:active {
-  -webkit-box-shadow: inset 0 -0.3em #00afe3;
-  -moz-box-shadow: inset 0 -0.3em #00afe3;
-  -ms-box-shadow: inset 0 -0.3em #00afe3;
-  -o-box-shadow: inset 0 -0.3em #00afe3;
-  box-shadow: inset 0 -0.3em #00afe3;
+  -webkit-box-shadow: inset 0 -0.3em #003C5A;
+  -moz-box-shadow: inset 0 -0.3em #003C5A;
+  -ms-box-shadow: inset 0 -0.3em #003C5A;
+  -o-box-shadow: inset 0 -0.3em #003C5A;
+  box-shadow: inset 0 -0.3em #003C5A;
 }
 section > footer > nav > a.active,
 section > footer > nav > a:active {

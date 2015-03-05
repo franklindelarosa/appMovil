@@ -46,6 +46,13 @@ label.requerido:before {
 	height: 90px;
 }
 
+.foto_detalle{
+	width: 90px;
+	height: 90px;
+	margin-top: 6px;
+	border-radius: 50%;
+}
+
 .notification > .window.confirm small {
 	display: none;
 }
@@ -65,16 +72,20 @@ a.icono {
 	padding-top: 4px;
 }
 
+nav[data-control="groupbar"] > a > p {
+	padding-top: 4px;
+}
+
 article#cancha h2{
 	padding: 8.53333px;
 }
 
 .sub-header{
-	color: #FFF;
-	background-color: #155474;
+	color: #003c5a;
+	background-color: #F7F7F7;
 }
 
-.registrar {
+.enlace {
 	font-size: 1.1em;
 	color: #003c5a;
 	text-decoration: underline;
