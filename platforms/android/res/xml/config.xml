@@ -1,6 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.fcracks.movil" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
+    <feature name="FacebookConnectPlugin">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+    </feature>
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <gap:splash gap:density="port-hdpi" src="res/android/splash-port-hdpi.png" />
     <gap:splash gap:density="port-ldpi" src="res/android/splash-port-ldpi.png" />
     <gap:splash gap:density="port-mdpi" src="res/android/splash-port-mdpi.png" />
@@ -33,7 +44,6 @@
     <preference name="disable-cursor" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="android-installLocation" value="auto" />
-    <gap:plugin name="org.apache.cordova.statusbar" />
     <icon src="icon.png" />
     <icon gap:density="ldpi" gap:platform="android" src="res/android/ldpi.png" />
     <icon gap:density="mdpi" gap:platform="android" src="res/android/mdpi.png" />
@@ -43,15 +53,4 @@
     <icon gap:density="xxxhdpi" gap:platform="android" src="res/android/xxxhdpi.png" />
     <gap:splash src="splash.png" />
     <access origin="*" />
-    <feature name="FacebookConnectPlugin">
-        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
-    </feature>
-    <access origin="https://m.facebook.com" />
-    <access origin="https://graph.facebook.com" />
-    <access origin="https://api.facebook.com" />
-    <access origin="https://*.fbcdn.net" />
-    <access origin="https://*.akamaihd.net" />
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
 </widget>

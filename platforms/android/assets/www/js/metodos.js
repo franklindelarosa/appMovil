@@ -434,9 +434,11 @@ function recortarNombre(nombres, apellidos){
     var custom_apellido = apellidos.split(' ');
     var result = custom_nombre[0]+' ';
     if(custom_apellido.length > 2){
-        if(custom_apellido[0].length < 3){
-            if(custom_apellido[1].length < 3){
+        if(custom_apellido[0].length < 4){
+            if(custom_apellido[1].length < 4){
                 result += custom_apellido[0]+' '+custom_apellido[1]+' '+custom_apellido[2];
+            }else{
+                result += custom_apellido[0]+' '+custom_apellido[1];
             }
         }else{
             result += custom_apellido[0]+' '+custom_apellido[1];
@@ -513,8 +515,9 @@ var imprimirInfoJugador = function (result){
     // console.log(result);
     if(result.status === 'ok' && !fixer){
         // var html_info = '<h2>Información del jugador</h2><br/>';
-        var html_info = '<img class="foto_detalle" src="'+direccionBase+'../fotos/'+result.data.foto+'"/><br>';
-        html_info += '<h4>'+result.data.nombres+' '+result.data.apellidos+'</h4>';
+        var html_info = '<div class="margin-top margin-bottom"><img class="foto_detalle" src="'+direccionBase+'../fotos/'+result.data.foto+'"/><br>';
+        html_info += '<h4 class="margin-top">'+result.data.nombres+' '+result.data.apellidos+'</h4>';
+        html_info += '<h5 class="margin-top">Sexo: '+result.data.sexo+'</h5>';
         if(result.entidad !== 'invitado'){
             if(result.data.fecha_nacimiento !== null){
                 html_info += '<h5>Edad: '+calcular_edad(result.data.fecha_nacimiento)+' años</h5>';
@@ -522,13 +525,13 @@ var imprimirInfoJugador = function (result){
                 html_info += '<h5>Edad: Sin definir</h5>';
             }
         }
-        html_info += '<h5>Sexo: '+result.data.sexo+'</h5>';
         html_info += '<h5>Posición: '+result.data.posicion+'</h5>';
         html_info += '<h5>Pierna hábil: ';
         result.data.pierna_habil !== null ? html_info +=result.data.pierna_habil+'</h5>' : html_info +='Sin definir</h5>';
         if(result.entidad === 'invitado'){
             html_info += '<h5>Responsable: '+result.data.resp_nombres+' '+result.data.resp_apellidos+'</h5>';
         }
+        html_info += '</div>';
         Lungo.Notification.html(html_info, "Cerrar");
     }
     fixer = false;

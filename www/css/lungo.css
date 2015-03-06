@@ -296,7 +296,7 @@ section.show .loading,section.active .loading,.notification .loading{-webkit-ani
 .notification .window{position:relative;opacity:0;text-align:center;-webkit-transition-duration:250ms;-moz-transition-duration:250ms;-ms-transition-duration:250ms;-o-transition-duration:250ms;transition-duration:250ms;-webkit-transition-timing-function:cubic-bezier(.645,.045,.355,1);-moz-transition-timing-function:cubic-bezier(.645,.045,.355,1);-ms-transition-timing-function:cubic-bezier(.645,.045,.355,1);-o-transition-timing-function:cubic-bezier(.645,.045,.355,1);transition-timing-function:cubic-bezier(.645,.045,.355,1);-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;-o-backface-visibility:hidden;backface-visibility:hidden;}
 .notification .window.show{opacity:1}
 .notification .window:not(.push){-webkit-transition-property:opacity,margin-top;-moz-transition-property:opacity,margin-top;-ms-transition-property:opacity,margin-top;-o-transition-property:opacity,margin-top;transition-property:opacity,margin-top;margin-top:100%;}
-.notification .window:not(.push).show{margin-top:0%}
+.notification .window:not(.push).show{margin-top:0%; border-radius: 3%}
 .notification .window.growl > *{position:absolute}
 .notification .window.growl,.notification .window.growl > *:not(.loading){width:104px;text-align:center}
 .notification .window.growl,.notification .window.growl > .icon{height:104px !important}

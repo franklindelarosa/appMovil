@@ -987,6 +987,12 @@ form input[type=checkbox]:checked:after,
   background-color: #fff;
   color: #3d3d3d;
   font-weight: 400;
+  -webkit-border-bottom-right-radius: 8px;
+  -webkit-border-bottom-left-radius: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -moz-border-radius-bottomleft: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 /*.notification .window.html button[data-action=close],*/
 .notification .window.html button[data-callback=cancel],
