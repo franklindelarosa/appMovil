@@ -53,6 +53,21 @@ label.requerido:before {
 	border-radius: 50%;
 }
 
+.texto-detalle{
+	color: gray;
+	font-size: .8em;
+	padding: .5333em 0px .6em;
+	border-bottom: solid 1px #D7D7D7;
+}
+.texto-detalle h5{
+	margin-bottom: 6px;
+}
+
+.button-window-html {
+	display: inline !important;
+	width: 100% !important;
+}
+
 .notification > .window.confirm small {
 	display: none;
 }

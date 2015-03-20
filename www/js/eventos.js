@@ -82,6 +82,9 @@ Lungo.ready(function() {
 $$('#main').on('load', function(event) {
     document.activeElement.blur();
 });
+$$('#main').on('swipeLeft', function(event) {
+    Lungo.Router.section("perfil");
+});
 $$('#listado-canchas').on('load', function(event) {
     $$("#main h1.title").html("Canchas");
 });
@@ -176,6 +179,9 @@ $$('#perfil').on('load', function(event) {
         },500);
     }
 });
+$$('#perfil').on('swipeRight', function(event) {
+    Lungo.Router.section("main");
+});
 var refresh_perfil = new Lungo.Element.Pull('#article_perfil', {
     onPull: "Desliza para actualizar",
     onRelease: "Suelta para recargar",
@@ -235,6 +241,8 @@ $$(document).on('singleTap', 'a#editar',function(event) {
 $$('#cerrar-sesion').on('singleTap', function(event) {
     localStorage.removeItem("_chrome-rel-back");
     sessionStorage.removeItem("id");
+    $$('#edit_contrasena').removeAttr('disabled');
+    $$('#fieldset_edit_contrasena').show();
     Lungo.Router.article("main", "listado-canchas");
     setTimeout(function(){
         $$('#cerrar-sesion').hide();
@@ -341,33 +349,55 @@ $$('#btn_registrar').on('singleTap', function(event) {
     }
 });
 
-$$('#btn_facebook').on('singleTap', function(event) {
+$$(document).on('singleTap', '#btn_continuar_face', function(event) {
+    if($$('#face_telefono').val() !== ''){
+        datos_facebook = Lungo.Core.mix(datos_facebook, {telefono: $$('#face_telefono').val()});
+        Lungo.Notification.show();
+        var url = direccionBase+"site/registrar-perfil";
+        Lungo.Service.post(url, datos_facebook, verificarRegistro, "json");
+    }else{
+        Lungo.Notification.error("Error", 'Debes ingresar tu número de teléfono', "remove", function(){return});
+    }
+});
+
+$$(document).on('singleTap', '#btn_facebook',function(event) {
     var fbLoginSuccess = function (userData) {
-        // console.log("UserInfo: " + JSON.stringify(userData));
+        // alert("UserInfo: " + JSON.stringify(userData));
         facebookConnectPlugin.api("me/?fields=first_name,middle_name,last_name,birthday,email,gender,age_range,picture.type(large)", ["email","user_birthday"],
         function (response){
-            // var html_photo = '<img src="'+response.picture.data.url+'"/>';
-            // Lungo.Notification.html(html_photo, "Cerrar");
             // alert(JSON.stringify(response));
-            var url = direccionBase+"site/registrar-perfil";
             var middle_name = '';
             if(typeof(response.middle_name) !== "undefined" && response.middle_name !== null) {
                 middle_name = ' '+response.middle_name;
             }
-            $$('#campo_nombres').val(response.first_name+middle_name);
-            $$('#campo_apellidos').val(response.last_name);
-            $$('#campo_correo').val(response.email);
-            $$('#campo_sexo').val(response.gender.substring(0,1));
-            Lungo.Router.section('registrar');
+            var fecha_nacimiento = response.birthday.split('/');
+            var birthday = fecha_nacimiento[2]+'-'+fecha_nacimiento[0]+'-'+fecha_nacimiento[1];
+            datos_facebook = {
+                nombres: capitalizarTexto(response.first_name+middle_name),
+                apellidos: capitalizarTexto(response.last_name),
+                foto: response.picture.data.url,
+                fecha_nacimiento: birthday,
+                correo: response.email,
+                contrasena: userData.authResponse.userID,
+                sexo: response.gender.substring(0,1),
+                facebook: 'si',
+            };
+            facebookConnectPlugin.logout(function(response){return}, function(response){return});
+            var url = direccionBase+"site/registrar-perfil";
+            Lungo.Service.post(url, datos_facebook, verificarRegistro, "json");
         },
         function (response){
-            alert(JSON.stringify(response));
+            // alert(JSON.stringify(response));
+            return;
         });
     }
 
     facebookConnectPlugin.login(["email","user_birthday"],
         fbLoginSuccess,
-        function (error) { Lungo.Notification.error("Error", ""+ error, "remove", function(){return}); }
+        function (error) {
+            // Lungo.Notification.error("Error", JSON.stringify(error), "remove", function(){return});
+            return;
+        }
     );
 });
 
@@ -383,26 +413,6 @@ $$(document).on('singleTap', '#foto',function(event) {
     Lungo.Notification.html(html_picture, 'Cancelar');
 });
 
-$$(document).on('singleTap', 'a#eliminar_foto',function(event) {
-    Lungo.Notification.confirm({
-        icon: 'exclamation-sign',
-        title: 'Seguro que deseas eliminar tu foto?',
-        description: '',
-        accept: {
-            icon: 'checkmark',
-            label: 'Si',
-            callback: function(){
-                var url = direccionBase+"usuario/reestablecer-foto?access-token="+localStorage["_chrome-rel-back"];
-                Lungo.Service.post(url, {cancha:cancha.id}, eliminarFoto, "json");
-            }
-        },
-        cancel: {
-            icon: 'close',
-            label: 'No',
-            callback: function(){ return }
-        }
-    });
-});
 
 $$(document).on('singleTap', '#btn_camera',function(event) {
     Lungo.Notification.hide();
@@ -410,6 +420,7 @@ $$(document).on('singleTap', '#btn_camera',function(event) {
         // $$('#foto').attr('src', 'data:image/jpeg;base64,'+imageData);
         var url = direccionBase+"usuario/actualizar-foto?access-token="+localStorage["_chrome-rel-back"];
         Lungo.Service.post(url, {foto:imageData}, function(result){
+            // console.log(result);
             if(result.status === 'ok'){
                 $$('#foto').attr('src', result.url);
                 Lungo.Notification.success("Correcto", result.mensaje, "ok", function(){return});
@@ -437,6 +448,7 @@ $$(document).on('singleTap', '#btn_gallery',function(event) {
     var onPhotoDataSuccess = function(imageData){
         var url = direccionBase+"usuario/actualizar-foto?access-token="+localStorage["_chrome-rel-back"];
         Lungo.Service.post(url, {foto:imageData}, function(result){
+            // console.log(result);
             if(result.status === 'ok'){
                 $$('#foto').attr('src', result.url);
                 Lungo.Notification.success("Correcto", result.mensaje, "ok", function(){return});
@@ -456,6 +468,27 @@ $$(document).on('singleTap', '#btn_gallery',function(event) {
         targetWidth:500,
         targetHeight:500,
         correctOrientation: true,
+    });
+});
+
+$$(document).on('singleTap', 'a#eliminar_foto',function(event) {
+    Lungo.Notification.confirm({
+        icon: 'exclamation-sign',
+        title: 'Seguro que deseas eliminar tu foto?',
+        description: '',
+        accept: {
+            icon: 'checkmark',
+            label: 'Si',
+            callback: function(){
+                var url = direccionBase+"usuario/reestablecer-foto?access-token="+localStorage["_chrome-rel-back"];
+                Lungo.Service.post(url, {cancha:cancha.id}, eliminarFoto, "json");
+            }
+        },
+        cancel: {
+            icon: 'close',
+            label: 'No',
+            callback: function(){ return }
+        }
     });
 });
 
@@ -508,45 +541,91 @@ $$(document).on('singleTap', '#equipos li.selectable', function(event) {
 });
 
 $$(document).on('singleTap', '#sacarme-blanco', function(event) {
-    Lungo.Notification.show();
     fixer = true;
-    var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
-    var datos = {
-        partido: partido,
-        equipo: "blancos",
-        entidad: "usuario"
-    };
-    current = $$(this).parent("li").first();
-    Lungo.Service.post(url, datos, verificarEliminacion, "json");
+    var this_entorno = this;
+    Lungo.Notification.confirm({
+        icon: 'exclamation-sign',
+        title: 'Seguro que deseas salirte del partido? Se eliminarán también tus invitados',
+        description: '',
+        accept: {
+            icon: 'checkmark',
+            label: 'Si',
+            callback: function(){
+                sacarme("blancos", this_entorno);
+            }
+        },
+        cancel: {
+            icon: 'close',
+            label: 'No',
+            callback: function(){ return }
+        }
+    });
 });
 
 $$(document).on('singleTap', '#sacarme-negro', function(event) {
-    Lungo.Notification.show();
     fixer = true;
-    var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
-    var datos = {
-        partido: partido,
-        equipo: "negros",
-        entidad: "usuario"
-    };
-    current = $$(this).parent("li").first();
-    Lungo.Service.post(url, datos, verificarEliminacion, "json");
+    var this_entorno = this;
+    Lungo.Notification.confirm({
+        icon: 'exclamation-sign',
+        title: 'Seguro que deseas salirte del partido? Se eliminarán también tus invitados',
+        description: '',
+        accept: {
+            icon: 'checkmark',
+            label: 'Si',
+            callback: function(){
+                sacarme("negros", this_entorno);
+            }
+        },
+        cancel: {
+            icon: 'close',
+            label: 'No',
+            callback: function(){ return }
+        }
+    });
 });
 
 $$(document).on('singleTap', '#sacar-invitado-blanco', function(event) {
-    Lungo.Notification.show();
     fixer = true;
-    var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
-    current = $$(this).parent("li").first();
-    Lungo.Service.post(url, {entidad: current.attr('data-fc-entidad'), equipo: "blancos", partido: partido, jugador: current.attr('data-fc-id-invitado')}, verificarEliminacionInvitado, "json");
+    var this_entorno = this;
+    Lungo.Notification.confirm({
+        icon: 'exclamation-sign',
+        title: 'Seguro que deseas sacar del partido a este invitado?',
+        description: '',
+        accept: {
+            icon: 'checkmark',
+            label: 'Si',
+            callback: function(){
+                sacarInvitado('blancos', this_entorno);
+            }
+        },
+        cancel: {
+            icon: 'close',
+            label: 'No',
+            callback: function(){ return }
+        }
+    });
 });
 
 $$(document).on('singleTap', '#sacar-invitado-negro', function(event) {
-    Lungo.Notification.show();
     fixer = true;
-    var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
-    current = $$(this).parent("li").first();
-    Lungo.Service.post(url, {entidad: current.attr('data-fc-entidad'), equipo: "negros", partido: partido, jugador: current.attr('data-fc-id-invitado')}, verificarEliminacionInvitado, "json");
+    var this_entorno = this;
+    Lungo.Notification.confirm({
+        icon: 'exclamation-sign',
+        title: 'Seguro que deseas sacar del partido a este invitado?',
+        description: '',
+        accept: {
+            icon: 'checkmark',
+            label: 'Si',
+            callback: function(){
+                sacarInvitado('negros', this_entorno);
+            }
+        },
+        cancel: {
+            icon: 'close',
+            label: 'No',
+            callback: function(){ return }
+        }
+    });
 });
 
 $$(document).on('singleTap', '#btn_invitar', function(event) {

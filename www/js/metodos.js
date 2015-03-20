@@ -267,20 +267,32 @@ var verificarLogin = function (result){
 
 // esta variable almacena la función de verificación de registro de un nuevo usuario
 var verificarRegistro = function (result){
-    if(result.status === "ok"){
-        localStorage["_chrome-rel-back"] = result.key;
-        sessionStorage["id"] = result.id;
-        $$('#cerrar-sesion').show();
-        imprimirPerfil();
-        if(sessionStorage["lanzadoDesdeHome"]){
-            Lungo.Router.section("perfil");
-            if(listadoDeEquipos !== 'no'){
-                imprimirEquipos(listadoDeEquipos);
-            }
-            Lungo.Notification.hide();
+    if(result.status === 'ok'){
+        if(result.key === 'no'){
+            facebookConnectPlugin.logout(function(response){return}, function(response){return});
+            var html_telefono =
+            '<div class="form"><p class="centrar margin-top margin-bottom">Debes ingresar tu número de teléfono para poder continuar</p>'+
+                '<fieldset data-icon="phone">'+
+                    '<input id="face_telefono" class="text align_center border" type="tel" placeholder="Teléfono">'+
+                '</fieldset>'+
+                '<button class="button-window-html" id="btn_continuar_face">Continuar</button>'+
+            '</div>';
+            Lungo.Notification.html(html_telefono, 'Cancelar');
         }else{
-            adicionarJugador();
-            Lungo.Router.section("main");
+            localStorage["_chrome-rel-back"] = result.key;
+            sessionStorage["id"] = result.id;
+            $$('#cerrar-sesion').show();
+            imprimirPerfil();
+            if(sessionStorage["lanzadoDesdeHome"]){
+                Lungo.Router.section("perfil");
+                if(listadoDeEquipos !== 'no'){
+                    imprimirEquipos(listadoDeEquipos);
+                }
+                Lungo.Notification.hide();
+            }else{
+                adicionarJugador();
+                Lungo.Router.section("main");
+            }
         }
     }else{
         Lungo.Notification.error("Error", result.mensaje, "remove", function(){return});
@@ -345,9 +357,23 @@ var imprimirJugador = function(result){
     }
 }
 
+// esta funcion es llamada por el evento "sacarme-blanco" o "sacarme-negro" quienes
+// mandan el valor del parámetro "equipo"
+function sacarme(equipo, this_entorno){
+    setTimeout(function(){Lungo.Notification.show()},300);
+    var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
+    var datos = {
+        partido: partido,
+        equipo: equipo,
+        entidad: "usuario"
+    };
+    current = $$(this_entorno).parent("li").first();
+    Lungo.Service.post(url, datos, verificarEliminacion, "json");
+}
+
 // esta variable almacena la función de verificación de eliminación del usuario en un partido específico
 var verificarEliminacion = function(result){
-    console.log(result);
+    // console.log(result);
     if(result.status === "ok"){
         current.remove();
         total_blancos -= $$('li[data-fc-equipo="b"][data-fc-id-responsable="'+result.yo+'"]').length;
@@ -377,6 +403,21 @@ var verificarEliminacion = function(result){
     }else{
         //Error
     }
+}
+
+// esta funcion es llamada por el evento "sacarme-blanco" o "sacarme-negro" quienes
+// mandan el valor del parámetro "equipo"
+function sacarInvitado(equipo, this_entorno){
+    setTimeout(function(){Lungo.Notification.show()},300);
+    var url = direccionBase+"usuario/sacar-jugador?access-token="+localStorage["_chrome-rel-back"];
+    current = $$(this_entorno).parent("li").first();
+    var datos = {
+        entidad: current.attr('data-fc-entidad'),
+        equipo: equipo,
+        partido: partido,
+        jugador: current.attr('data-fc-id-invitado')
+    }
+    Lungo.Service.post(url, datos, verificarEliminacionInvitado, "json");
 }
 
 // esta variable almacena la función de verificación de eliminación de un invitado en un partido específico
@@ -458,6 +499,13 @@ function imprimirPerfil(){
             // console.log(result);
             if(result.status === 'ok'){
                 usuario = result.data;
+                if(usuario.facebook === 'si'){
+                    $$('#edit_contrasena').attr('disabled');
+                    $$('#fieldset_edit_contrasena').hide();
+                }else{
+                    $$('#edit_contrasena').removeAttr('disabled');
+                    $$('#fieldset_edit_contrasena').show();
+                }
                 var articulo = $$('#article_perfil div#contenido');
                 var custom_nombre = recortarNombre(usuario.nombres, usuario.apellidos);
                 articulo.empty();
@@ -515,7 +563,7 @@ var imprimirInfoJugador = function (result){
     // console.log(result);
     if(result.status === 'ok' && !fixer){
         // var html_info = '<h2>Información del jugador</h2><br/>';
-        var html_info = '<div class="margin-top margin-bottom"><img class="foto_detalle" src="'+direccionBase+'../fotos/'+result.data.foto+'"/><br>';
+        var html_info = '<div class="texto-detalle"><img class="foto_detalle" src="'+direccionBase+'../fotos/'+result.data.foto+'"/><br>';
         html_info += '<h4 class="margin-top">'+result.data.nombres+' '+result.data.apellidos+'</h4>';
         html_info += '<h5 class="margin-top">Sexo: '+result.data.sexo+'</h5>';
         if(result.entidad !== 'invitado'){
@@ -532,7 +580,7 @@ var imprimirInfoJugador = function (result){
             html_info += '<h5>Responsable: '+result.data.resp_nombres+' '+result.data.resp_apellidos+'</h5>';
         }
         html_info += '</div>';
-        Lungo.Notification.html(html_info, "Cerrar");
+        Lungo.Notification.html(html_info, "CERRAR");
     }
     fixer = false;
 }

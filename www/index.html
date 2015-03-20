@@ -153,27 +153,21 @@
         <article class="active scroll indented">
             <div class="form">
                 <fieldset>
-                    <label class="requerido">Nombre(s):</label>
                     <input id="campo_nombres" type="text" placeholder="Nombre(s)">
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Apellido(s):</label>
                     <input id="campo_apellidos" type="text" placeholder="Apellido(s)">
                 </fieldset>
-                <fieldset data-icon="calendar">
-                    <label>Fecha nac:</label>
-                    <input id="campo_fecha_nacimiento" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="aaaa-mm-dd">
+                <fieldset>
+                    <input id="campo_fecha_nacimiento" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Fecha de nacimiento">
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Correo:</label>
                     <input id="campo_correo" type="email" placeholder="Correo electrónico">
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Contraseña:</label>
                     <input id="campo_contrasena" type="password" placeholder="Contraseña">
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Sexo:</label>
                     <label class="select border">
                         <select id="campo_sexo">
                             <option value="">Selecciona sexo</option>
@@ -183,7 +177,6 @@
                     </label>
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Teléfono:</label>
                     <input id="campo_telefono" type="tel" placeholder="Telefono">
                 </fieldset>
                 <fieldset>
@@ -213,23 +206,18 @@
         <article class="active scroll indented">
             <div class="form">
                 <fieldset>
-                    <label class="requerido">Nombre(s):</label>
                     <input id="inv_nombres" type="text" placeholder="Nombre(s)">
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Apellido(s):</label>
                     <input id="inv_apellidos" type="text" placeholder="Apellido(s)">
                 </fieldset>
                 <!-- <fieldset>
-                    <label>Fecha nac:</label>
-                    <input id="inv_fecha_nacimiento" type="date" placeholder="mm/dd/aaaa">
+                    <input id="inv_fecha_nacimiento" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="mm/dd/aaaa">
                 </fieldset> -->
                 <fieldset>
-                    <label class="requerido">Correo:</label>
                     <input id="inv_correo" type="email" placeholder="Correo electrónico">
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Sexo:</label>
                     <label class="select border">
                         <select id="inv_sexo">
                             <option value="">Selecciona sexo</option>
@@ -239,7 +227,6 @@
                     </label>
                 </fieldset>
                 <fieldset>
-                    <label class="requerido">Teléfono:</label>
                     <input id="inv_telefono" type="tel" placeholder="Telefono">
                 </fieldset>
                  <fieldset>
@@ -264,8 +251,16 @@
 
     <section id="perfil" data-transition="fade" data-pull="chevron-down">
         <header data-title="Perfil">
+            <nav><a href="#" data-view-menu="opciones-menu" data-icon="cogs"></a>
+        </nav>
             <nav class="on-right"><button id="cerrar-sesion" data-icon="off"></button></nav>
         </header>
+        <nav id="opciones-menu" data-control="menu">
+            <a href="#" id="btn_cerrar-sesion">Cerrar sesión</a>
+            <a href="#" id="btn_desactivar-cuenta">Activity</a>
+            <a href="#" id="btn_acerca-de">Acerca De</a>
+            <a href="#" data-view-section="perfil">Cancelar</a>
+        </nav>
         <nav data-control="groupbar">
             <a href="#" data-view-section="main"><p class="centrar" style="color: #A1A6A8"><img src="images/field.png" height="25px"> Canchas</p></a>
             <a class="active" href="#" data-view-section="perfil"><p class="centrar" style="color: #003C5A"><img src="images/user_active.png" height="25px"> Perfil</p></a>
@@ -303,13 +298,13 @@
                 </fieldset>
                 <fieldset>
                     <label class="requerido">Fecha nac:</label>
-                    <input id="edit_fecha_nacimiento" type="date" placeholder="mm/dd/aaaa">
+                    <input id="edit_fecha_nacimiento" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Fecha de nacimiento">
                 </fieldset>
                 <!-- <fieldset>
                     <label>Correo:</label>
                     <input id="edit_correo" type="email" placeholder="Correo electrónico">
                 </fieldset> -->
-                <fieldset>
+                <fieldset id="fieldset_edit_contrasena">
                     <label class="requerido">Contraseña:</label>
                     <input id="edit_contrasena" type="password" placeholder="**********">
                 </fieldset>
