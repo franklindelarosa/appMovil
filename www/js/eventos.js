@@ -382,6 +382,7 @@ $$(document).on('singleTap', '#btn_facebook',function(event) {
                 sexo: response.gender.substring(0,1),
                 facebook: 'si',
             };
+            Lungo.Notification.show();
             facebookConnectPlugin.logout(function(response){return}, function(response){return});
             var url = direccionBase+"site/registrar-perfil";
             Lungo.Service.post(url, datos_facebook, verificarRegistro, "json");
