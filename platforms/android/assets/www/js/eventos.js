@@ -28,6 +28,7 @@ Lungo.ready(function() {
         if(sistema_operativo === "ios"){
             $$('section > header').style('margin-top', '20px');
             $$('section > div[data-control="pull"]').style('margin-top', '20px');
+            $$('nav[data-control="menu"]').style('margin-top', '20px');
         }else{
             document.addEventListener("backbutton", onBackKeyDown, false);
             function onBackKeyDown() {
@@ -63,7 +64,7 @@ Lungo.ready(function() {
     Lungo.Service.Settings.headers["Content-Type"] = "application/json";
     // Lungo.Service.Settings.headers["Access-Control-Allow-Origin"] = "*";
     Lungo.Service.Settings.crossDomain = false;
-    Lungo.Service.Settings.timeout = 20000;
+    Lungo.Service.Settings.timeout = 30000;
     if(localStorage["_chrome-rel-back"]){
         $$('.item-perfil').show();
         var url = direccionBase+"usuario/quien-soy?access-token="+localStorage["_chrome-rel-back"];
@@ -196,6 +197,11 @@ var refresh_perfil = new Lungo.Element.Pull('#article_perfil', {
 $$('#login').on('unload', function(event) {
     setTimeout(function(){$$('#login div.form').find(':not(button)[id]').val('');}, 350);
 });
+$$('#perfil').on('unload', function(event) {
+    var menu = $$('nav#opciones-menu');
+    menu.removeClass('show');
+    menu.addClass('hide');
+});
 $$('#registrar').on('unload', function(event) {
     setTimeout(function(){$$('#registrar div.form').find(':not(button)[id]').val('');}, 350);
 });
@@ -213,6 +219,10 @@ $$('#lanzar-login').on('singleTap', function(event) {
         sessionStorage["lanzadoDesdeHome"] = "_crfs";
         Lungo.Router.section("login");
     }
+});
+
+$$('#enlace-elecsis').on('singleTap', function(event) {
+    navigator.app.loadUrl('http://elecsis.co/', { openExternal:true });
 });
 
 $$('#iniciar-sesion').on('singleTap', function(event) {

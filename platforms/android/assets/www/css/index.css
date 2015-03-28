@@ -106,8 +106,21 @@ article#cancha h2{
 	text-decoration: underline;
 }
 
+.borde-info {
+	padding-bottom: 8px;
+	border-bottom: solid 2px #B8B8B8;
+}
+
+small.item-info{
+	color: #003c5a;
+}
+
 .icon.off {
 	font-size: 1.6em;
+}
+
+.icon.menu {
+	font-size: 1.5em;
 }
 
 span.icon.plus {

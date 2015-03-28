@@ -636,6 +636,7 @@ function imprimirPosiciones(select){
 
 // esta función verifica si la eliminación de la foto fue exitosa en el servidor la elimina en la app
 var eliminarFoto = function(result){
+    console.log(result);
     if(result.status === 'ok'){
         $$('#foto').attr('src', result.url);
         Lungo.Notification.success("Correcto", result.mensaje, "ok", function(){return});
