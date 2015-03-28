@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.fcracks.movil" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
+    <feature name="FacebookConnectPlugin">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+    </feature>
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <gap:splash gap:density="port-hdpi" src="res/android/splash-port-hdpi.png" />
+    <gap:splash gap:density="port-ldpi" src="res/android/splash-port-ldpi.png" />
+    <gap:splash gap:density="port-mdpi" src="res/android/splash-port-mdpi.png" />
+    <gap:splash gap:density="port-xhdpi" src="res/android/splash-port-xhdpi.png" />
+    <gap:splash gap:density="port-xxhdpi" src="res/android/splash-port-xxhdpi.png" />
+    <gap:splash gap:density="port-xxxhdpi" src="res/android/splash-port-xxxhdpi.png" />
+    <name>FutbolCracks</name>
+    <description>
+		Aplicación Móvil FutbolCracks.
+	</description>
+    <author email="info@elecsis.com.co" href="http://www.fcracks.com">
+		Elecsis S.A.S
+	</author>
+    <preference name="permissions" value="none" />
+    <preference name="BackupWebStorage" value="local" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="phonegap-version" value="3.6.3" />
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="false" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="true" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <preference name="disable-cursor" value="true" />
+    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-installLocation" value="auto" />
+    <icon src="icon.png" />
+    <icon gap:density="ldpi" gap:platform="android" src="res/android/ldpi.png" />
+    <icon gap:density="mdpi" gap:platform="android" src="res/android/mdpi.png" />
+    <icon gap:density="hdpi" gap:platform="android" src="res/android/hdpi.png" />
+    <icon gap:density="xhdpi" gap:platform="android" src="res/android/xhdpi.png" />
+    <icon gap:density="xxhdpi" gap:platform="android" src="res/android/xxhdpi.png" />
+    <icon gap:density="xxxhdpi" gap:platform="android" src="res/android/xxxhdpi.png" />
+    <gap:splash src="splash.png" />
+    <access origin="*" />
+</widget>
