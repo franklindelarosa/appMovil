@@ -51,7 +51,7 @@ Lungo.ready(function() {
         }
     }
     direccionBase = "http://elecsis.com.co/fcracks/fcapi/web/v1/";
-    // direccionBase = "http://fcracks.com/fcapi/web/v1/";
+    //direccionBase = "http://fcracks.com/fcapi/web/v1/";
     // direccionBase = "http://localhost:8080/futbolcracksapi/web/v1/";
     Lungo.Service.Settings.async = true;
     Lungo.Service.Settings.error = function(type, xhr){
